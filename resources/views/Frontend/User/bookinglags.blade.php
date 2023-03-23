@@ -24,6 +24,14 @@
 			<div class="col-md-5">
 				<div class="border p-4">
 					<span>Luggage Storage Piazza Cavour</span><br><br>
+					<span>Additional Information</span><hr>
+					<p style="font-size: 13px;">Looking for a place to drop your bags? Our luggage storage close to Piazza Cavour and Castel Sant'Angelo is the perfect place! Experience a new of traveling, hands-free.
+						We created a service to make traveling easier for all you travelers out there! Never let your bags stop you from walking around the city drop them off with our lovely partners all around the world who are waiting for you!<br>
+						Our service makes it easy for you to book with us. Find us on our Website or through our App. Our geolocator will help you choose the closest Radical partner to you. Choose one & drop your bags off. Simple is the word.<br>
+					
+					</p><hr>
+					<span>Opening hours:</span><br>
+					<strong>Today: 9:00 AM - 6:00 PM</strong><hr>
 					<strong>Locations</strong>
 					@if(isset($shop))
 					@foreach($shop as $v)
@@ -101,33 +109,9 @@
 
 									<div class="form-group col-md-8 mt-3 mb-4">									
 										<label>Amount (€)</label><br>
-										<input type="number" class="form-control bg-light" id="amount" readonly="">
+										<input type="number" name="amount" class="form-control bg-light" id="amount" readonly="">
 									</div>
 
-
-
-									<strong>Personal Information</strong>
-
-									<div class="form-group col-md-12 mt-3">									
-										<label>Name</label><br>
-										<input type="text" value="" name="name" class="form-control" required="">
-									</div>
-
-									<div class="form-group col-md-6 mt-3">									
-										<label>Email</label><br>
-										<input type="text" value="" name="email" class="form-control">
-									</div>
-
-
-									<div class="form-group col-md-6 mt-3">									
-										<label>Phone</label><br>
-										<input type="text" value="" name="phone" class="form-control" required="">
-									</div>
-
-									<div class="form-group col-md-12 mt-3">									
-										<label>Address</label><br>
-										<textarea rows="3" class="form-control" name="address"></textarea>
-									</div>
 
 
 

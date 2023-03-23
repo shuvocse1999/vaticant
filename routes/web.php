@@ -55,6 +55,7 @@ Route::get('/offer_detail/{id}',[FrontendController::class,'offer_detail']);
 Route::post('/searchservice/',[FrontendController::class,'searchservice']);
 Route::get('/bookinglags',[FrontendController::class,'bookinglags']);
 Route::post('/bookingbagsnow',[FrontendController::class,'bookingbagsnow']);
+Route::post('/bookingbagsnowconfirm',[FrontendController::class,'bookingbagsnowconfirm']);
 
 
 

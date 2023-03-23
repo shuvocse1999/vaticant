@@ -16,6 +16,7 @@ use App\Models\offer_info;
 use DB;
 use Auth;
 use Mail;
+use Session;
 
 class FrontendController extends Controller
 {
@@ -126,8 +127,8 @@ class FrontendController extends Controller
 
             Mail::send('email-template',$mail_data,function($message) use ($mail_data){
                 $message->to($mail_data['recipient'])
-                         ->from($mail_data['fromEmail'],$mail_data['fromName'])
-                         ->subject($mail_data['subject']);
+                ->from($mail_data['fromEmail'],$mail_data['fromName'])
+                ->subject($mail_data['subject']);
             });
 
             return redirect()->back()->with('success','Your Message Sent Successfully');
@@ -144,7 +145,7 @@ class FrontendController extends Controller
         $language = \Illuminate\Support\Facades\App::getLocale();
         if($language == 'en')
         {
-            
+
             $data = service_info::where('status',1)->where('service_name','LIKE','%'.$request->search_text.'%')->get();
         }
         else
@@ -166,7 +167,9 @@ class FrontendController extends Controller
 
     public function bookingbagsnow(Request $r){
 
-        DB::table("booking")->insert([
+        $session = Session::getId();
+
+        DB::table("draftbooking")->insert([
 
             'checkin' => $r->checkin,
             'checkout' => $r->checkout,
@@ -175,13 +178,44 @@ class FrontendController extends Controller
             'bags' => $r->bags,
             'total' => $r->total,
             'location' => $r->location,
-            'name' => $r->name,
-            'email' => $r->email,
-            'phone' => $r->phone,
-            'address' => $r->address,
+            'session_id' => Session::getId(),
+            'amount' => $r->amount,
 
         ]);
 
-         return redirect()->back()->with('success','Booking Successfully Done');
+        $draftbooking = DB::table('draftbooking')->where('session_id',$session)->first();
+
+        return view('Frontend.User.booking_personalinfo',compact('draftbooking'));
+    }
+
+    public function bookingbagsnowconfirm(Request $r){
+
+        $session = Session::getId();
+        $draftbooking = DB::table('draftbooking')->where('session_id',$session)->first();
+
+        DB::table("booking")->insert([
+
+            'checkin' => $draftbooking->checkin,
+            'checkout' => $draftbooking->checkout,
+            'from_time' => $draftbooking->from_time,
+            'to_time' => $draftbooking->to_time,
+            'bags' => $draftbooking->bags,
+            'total' => $draftbooking->total,
+            'location' => $draftbooking->location,
+            'name' => $r->name,
+            'address' => $r->address,
+            'phone' => $r->phone,
+            'email' => $r->email,
+
+        ]);
+
+         $draftbooking = DB::table('draftbooking')->where('session_id',$session)->delete();
+
+         Session::regenerate();
+
+        
+
+        return redirect('/')->with('success','Booking Successfully Done.');
+
     }
 }
